@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "/pb";
+
+message User {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  int64 birthday = 4;
+  int64 created_at = 5;
+}
+
+message Users {
+  repeated User users = 1;
+}
+
+message CreateRequest {
+  User user = 1;
+}
+
+message CreateResponse {
+  string id = 1;
+}
+
+message UpdateByIdRequest {
+  User user = 1;
+}
+
+message UpdateByIdResponse {
+  string id = 1;
+  int64 rows_affected = 2;
+}
+
+message DeleteByIdsRequest {
+  repeated string ids = 1;
+}
+
+message DeleteByIdsResponse {
+  repeated string ids = 1;
+  int64 rows_affected = 2;
+}
+
+message ListIdsRequest {
+  int32 skip = 1;
+  int32 take = 2;
+}
+
+message ListIdsResponse {
+  repeated string ids = 1;
+}
+
+message ListByIdsRequest {
+  repeated string ids = 1;
+}
+
+service UserService {
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc UpdateById(UpdateByIdRequest) returns (UpdateByIdResponse) {}
+  rpc DeleteByIds(DeleteByIdsRequest) returns (DeleteByIdsResponse) {}
+  rpc ListIds(ListIdsRequest) returns (ListIdsResponse) {}
+  rpc ListByIds(ListByIdsRequest) returns (Users) {}
+}
